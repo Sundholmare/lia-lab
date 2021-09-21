@@ -1,0 +1,46 @@
+.navbar{
+  background-color: #022d41;
+  display: flex;
+  height: 8rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoBox{
+  height: 100%;
+  width: 30%;
+  margin-left: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo{
+  min-width: 7.25rem;
+
+
+}.title{
+  color: white;
+  font-size: 3rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.15rem;
+}
+
+.btn{
+  margin-right: 4rem;
+  width: 9rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background: none;
+  color: #fff;
+  border: 2px solid #fff;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.15rem;
+}
+
+.btn:hover{
+  background: #fff;
+  color: #2B2B2B;
+  transition: background 0.3s, color 0.3s;
+}
