@@ -1,21 +1,20 @@
-import PostCard from '../components/PostCard';
-import styles from '../styles/Home.module.css';
-import AddPost from '../pages/add-post';
+import PostCard from 'components/PostCard';
+import styles from 'styles/Home.module.css';
+import AddPost from 'pages/add-post';
+import Layout from 'components/Layout';
 
 export default function Home({ persons }) {
     return (
-        <div>
-            <main>
-                <div className={styles.container}>
-                        <ul>
-                            {persons.map((person, i) => (
-                                <PostCard post={person} key={i} />
-                            ))}
-                        </ul>
-                          <AddPost />
-                </div>
-            </main>
-        </div>
+        <Layout>
+            <div className={styles.container}>
+                <ul>
+                    {persons.map((person, i) => (
+                        <PostCard post={person} key={i} />
+                    ))}
+                </ul>
+                <AddPost />
+            </div>
+        </Layout>
     );
 }
 

@@ -1,13 +1,11 @@
-import styles from '../../styles/Home.module.css'
-import React, { useState } from 'react';
+import styles from 'styles/Home.module.css'
+import React from 'react';
 
 
-const Layout = () => {
+const Layout = ({ children }) => {
+    const image = 'https://consid.se/wp-content/themes/consid/img/consid_white.svg'
 
-    const image = 'https://consid.se/wp-content/uploads/2019/12/Icon-white.svg'
-
-
-    return(
+    return (
         <div className="wrapper">
             <header>
                 <nav className={styles.navbar}>
@@ -15,9 +13,13 @@ const Layout = () => {
                         <img className={styles.logo} src={image} alt="consid logo" />
                         <h1 className={styles.title}>Personalverktyg</h1>
                     </div>
-                        <button className={styles.btn}>Logga in</button>
+                    <button className={styles.btn}>Logga in</button>
                 </nav>
             </header>
+
+            <main>
+                {children}
+            </main>
         </div>
     )
 }

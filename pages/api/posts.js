@@ -1,5 +1,5 @@
-import { connectToDatabase } from '../lib/mongodb';
-const ObjectId = require('mongodb').ObjectId;
+import { connectToDatabase } from 'utils/mongodb';
+// const ObjectId = require('mongodb').ObjectId;
 
 export default async function handler(req, res) {
     // switch the methods
