@@ -1,4 +1,4 @@
-const { connectToDatabase } = require('../../lib/mongodb');
+import { connectToDatabase } from '../lib/mongodb';
 const ObjectId = require('mongodb').ObjectId;
 
 export default async function handler(req, res) {
@@ -19,5 +19,28 @@ export default async function handler(req, res) {
         case 'DELETE': {
             return deletePost(req, res);
         }
+    }
+}
+
+async function getPosts(req,res){
+    try {
+        // connect to the database
+        let { db } = await connectToDatabase();
+        // fetch the posts
+        let posts = await db
+            .collection('company_list')
+            .find({})
+            .toArray();
+        // return the posts
+        return res.json({
+            message: JSON.parse(JSON.stringify(posts)),
+            success: true,
+        });
+    } catch (error) {
+        // return the error
+        return res.json({
+            message: new Error(error).message,
+            success: false,
+        });
     }
 }
