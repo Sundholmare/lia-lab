@@ -19,10 +19,54 @@ export default function Home({ persons }) {
         reAssign: false
     })
 
-    const onSubmit = () => {
-        //post formData to mongo
+    console.log(formData);
 
-        console.log(formData);
+    const onSubmit = async (e) => {
+
+        //post formData to mongo
+        // post structure
+        let post = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        closestManager: formData.closestManager,
+        officeLocation: formData.officeLocation,
+        firstEmploymentDate: formData.firstEmploymentDate,
+        lastEmploymentDate: formData.lastEmploymentDate,
+        reAssign: formData.reAssign
+      };
+
+      // save the post
+      let response = await fetch('/api/posts', {
+          method: 'POST',
+          body: JSON.stringify(post),
+      });
+
+      // get the data
+      let data = await response.json();
+
+      if (data.success) {
+          // reset the fields
+          setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+            closestManager: '',
+            officeLocation: '',
+            dateOfBirth: '',
+            firstEmploymentDate: '',
+            lastEmploymentDate: '',
+            reAssign: false
+          })
+
+          // set the message
+          return 'Addition successful';
+      } else {
+          // set the error
+          return 'Error';
+      }
         
     }
   
@@ -61,7 +105,7 @@ export default function Home({ persons }) {
                     <div className={styles.formItem}>
                         <label>Email</label>
                         <input
-                            type="text"
+                            type="email"
                             name="email"
                             defaultValue={formData.email}
                             placeholder="Email"
@@ -71,7 +115,7 @@ export default function Home({ persons }) {
                     <div className={styles.formItem}>
                         <label>Phonenumber</label>
                         <input
-                            type="text"
+                            type="tel"
                             name="phoneNumber"
                             defaultValue={formData.phoneNumber}
                             placeholder="Phonenumber"
@@ -80,22 +124,26 @@ export default function Home({ persons }) {
 
                     <div className={styles.formItem}>
                         <label>Closest manager</label>
-                        <input
+                        <select
                             type="text"
                             name="closestManager"
-                            defaultValue={formData.closestManager}
-                            placeholder="Closest manager"
-                        />
+                            placeholder="Closest manager">
+                              <option >Välj chef</option>
+                              <option value="Elisabeth Paulsson">Elisabeth Paulsson</option>
+                              <option value="Peter Elgåker">Peter Elgåker</option>
+                        </select>
                     </div>
 
                     <div className={styles.formItem}>
                         <label>Office location</label>
-                        <input
+                        <select
                             type="text"
                             name="officeLocation"
-                            defaultValue={formData.officeLocation}
-                            placeholder="Office location"
-                        />
+                            placeholder="Office location">
+                              <option >Välj kontor</option>
+                              <option value="Helsingborg">Helsingborg</option>
+                              <option value="Malmö">Malmö</option>
+                        </select>
                     </div>
 
                     <div className={styles.formItem}>
@@ -111,7 +159,7 @@ export default function Home({ persons }) {
                     <div className={styles.formItem}>
                         <label>First employment date</label>
                         <input
-                            type="text"
+                            type="date"
                             name="firstEmploymentDate"
                             defaultValue={formData.firstEmploymentDate}
                             placeholder="First employment date"
@@ -121,7 +169,7 @@ export default function Home({ persons }) {
                     <div className={styles.formItem}>
                         <label>Last employment date</label>
                         <input
-                            type="text"
+                            type="date"
                             name="lastEmploymentDate"
                             defaultValue={formData.lastEmploymentDate}
                             placeholder="Last employment date"

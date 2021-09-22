@@ -44,3 +44,23 @@ async function getPosts(req,res){
         });
     }
 }
+
+async function addPost(req, res) {
+    try {
+        // connect to the database
+        let { db } = await connectToDatabase();
+        // add the post
+        await db.collection('company_list').insertOne(JSON.parse(req.body));
+        // return a message
+        return res.json({
+            message: 'Person added successfully',
+            success: true,
+        });
+    } catch (error) {
+        // return an error
+        return res.json({
+            message: new Error(error).message,
+            success: false,
+        });
+    }
+}

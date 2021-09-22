@@ -11,7 +11,7 @@ export default function Form({ children, onSubmit, setFormData, formData }) {
 
         setFormData({
             ...formData, 
-            [e.target.name]: Object.assign(formData[e.target.name], formData[e.target.name] = e.target.value)
+            [e.target.name]: e.target.value
         });
     }
 
@@ -42,7 +42,7 @@ export default function Form({ children, onSubmit, setFormData, formData }) {
                         </div>
                     ) : null}
 
-                   {children}
+                    {children}
                 </form>
             </div>
         </div>
