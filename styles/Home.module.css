@@ -1,5 +1,15 @@
-.navbar{
+.header {
   background-color: #022d41;
+}
+
+.innercontent {
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar{
   display: flex;
   height: 8rem;
   align-items: center;
@@ -18,14 +28,15 @@
 .logo{
   /* min-width: 7.25rem; */
 
-  max-height: 10rem;
+  max-height: 4rem;
 
 
 }.title{
   color: white;
-  font-size: 3rem;
+  font-size: 2rem;
   line-height: 1.25rem;
   letter-spacing: 0.15rem;
+  margin: 0 2rem;
 }
 
 .btn{
