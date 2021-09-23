@@ -39,18 +39,6 @@
   margin: 0 2rem;
 }
 
-.btn{
-  margin-right: 4rem;
-  width: 9rem;
-  height: 2.5rem;
-  border-radius: 0.5rem;
-  background: none;
-  color: #fff;
-  border: 2px solid #fff;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1.15rem;
-}
 
 .btn:hover{
   background: #fff;
@@ -64,4 +52,3 @@
   max-width: 80%;
   border: 2px solid black;
 }
-

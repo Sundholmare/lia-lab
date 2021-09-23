@@ -64,3 +64,56 @@ async function addPost(req, res) {
         });
     }
 }
+
+async function updatePost(req, res) {
+    try {
+        // connect to the database
+        let { db } = await connectToDatabase();
+
+        // update the published status of the post
+        await db.collection('company_list').updateOne(
+            {
+                _id: new ObjectId(req.body),
+            },
+            { $set: { published: true } }
+        );
+
+        // return a message
+        return res.json({
+            message: 'Person updated successfully',
+            success: true,
+        });
+    } catch (error) {
+
+        // return an error
+        return res.json({
+            message: new Error(error).message,
+            success: false,
+        });
+    }
+}
+
+async function deletePost(req, res) {
+    try {
+        // Connecting to the database
+        let { db } = await connectToDatabase();
+
+        // Deleting the post
+        await db.collection('company_list').deleteOne({
+            _id: new ObjectId(req.body),
+        });
+
+        // returning a message
+        return res.json({
+            message: 'Person deleted successfully',
+            success: true,
+        });
+    } catch (error) {
+
+        // returning an error
+        return res.json({
+            message: new Error(error).message,
+            success: false,
+        });
+    }
+}

@@ -2,22 +2,32 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from 'styles/Home.module.css';
 
-export default function PostCard({ post }) {
-    const [publishing, setPublishing] = useState(false);
-    const [deleting, setDeleting] = useState(false);
-    const router = useRouter();
+export default function PostCard({ person }) {
+
+    const [display, setDisplay] = useState(false);
+
+    const handleClick= () => {
+
+        setDisplay(!display)
+    }
+
 
     return (
-            <li className={styles.listItem}>
-                <h3>Namn: {`${post.firstName} ${post.lastName}`}</h3>
-                <p>Email: {post.email}</p>  
-                <p>Telefonnummer: {post.phoneNumber}</p>  
-                <p>Närmsta chef: {post.closestManager}</p>  
-                <p>Kontor: {post.officeLocation}</p>  
-                <p>Födelsedatum: {post.dateOfBirth}</p>  
-                <p>Första anställningsdag: {post.firstEmploymentDate}</p>
-                <p>Sista anställningsdag: {post.lastEmploymentDate}</p>
-                <p>Vill bli omplacerad: {post.reAssign ? 'Ja' : 'Nej'}</p>
+            <li  className="flex flex-col border-2 border-black">
+                {!display 
+                ? 
+                <button className="flex justify-between px-2" onClick={handleClick}><h3 className="font-bold">{`${person.firstName} ${person.lastName}`}</h3><h3>{person.officeLocation}</h3></button> 
+                : 
+                <div>
+                <button onClick={handleClick}><h3 className="font-bold">{`${person.firstName} ${person.lastName}`}</h3></button>
+                <p><span className="font-bold">Email: </span>{person.email}</p>  
+                <p><span className="font-bold">Telefonnummer:</span> {person.phoneNumber}</p>  
+                <p><span className="font-bold">Närmsta chef:</span> {person.closestManager}</p>  
+                <p><span className="font-bold">Kontor:</span> {person.officeLocation}</p>  
+                <p><span className="font-bold">Födelsedatum:</span> {person.dateOfBirth}</p>  
+                <p><span className="font-bold">Första anställningsdag:</span> {person.firstEmploymentDate}</p>
+                {person.lastEmploymentDate === '' ? null : <p><span className="font-bold">Sista anställningsdag:</span> {person.lastEmploymentDate}</p>}
+                <p><span className="font-bold">Vill bli omplacerad:</span> {person.reAssign ? 'Ja' : 'Nej'}</p></div>}
             </li>   
     );
 }

@@ -4,8 +4,12 @@ import PostCard from 'components/PostCard';
 import styles from 'styles/Home.module.css';
 import Form from 'components/Form';
 import Layout from 'components/Layout';
+import Modal from 'components/Modal/index'
 
 export default function Home({ persons }) {
+
+    const [showModal, setShowModal] = useState(false);
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -35,53 +39,52 @@ export default function Home({ persons }) {
         firstEmploymentDate: formData.firstEmploymentDate,
         lastEmploymentDate: formData.lastEmploymentDate,
         reAssign: formData.reAssign
-      };
+        };
 
-      // save the post
-      let response = await fetch('/api/posts', {
-          method: 'POST',
-          body: JSON.stringify(post),
-      });
+        // save the post
+        let response = await fetch('/api/posts', {
+            method: 'POST',
+            body: JSON.stringify(post),
+        });
 
-      // get the data
-      let data = await response.json();
+        // get the data
+        let data = await response.json();
 
-      if (data.success) {
-          // reset the fields
-          setFormData({
-            firstName: '',
-            lastName: '',
-            email: '',
-            phoneNumber: '',
-            closestManager: '',
-            officeLocation: '',
-            dateOfBirth: '',
-            firstEmploymentDate: '',
-            lastEmploymentDate: '',
-            reAssign: false
-          })
+        if (data.success) {
+            // reset the fields
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phoneNumber: '',
+                closestManager: '',
+                officeLocation: '',
+                dateOfBirth: '',
+                firstEmploymentDate: '',
+                lastEmploymentDate: '',
+                reAssign: false
+            })
 
           // set the message
-          return 'Addition successful';
-      } else {
+        return 'Addition successful';
+            } else {
           // set the error
-          return 'Error';
-      }
+        return 'Error';
+        }
         
     }
-  
+
+
     return (
         <Layout>
-            <div className={styles.container}>
-                <ul>
-                    {persons.map((person, i) => (
-                        <PostCard post={person} key={i} />
-                    ))}
-                </ul>
-
+            <div>
+        <button onClick={() => setShowModal(true)}>Open Modal</button>
+        <Modal
+            onClose={() => setShowModal(false)}
+            show={showModal}>
                 <Form onSubmit={onSubmit} setFormData={setFormData} formData={formData}>
                     <div className={styles.formItem}>
-                        <label>Firstname</label>
+                        <label>Firstname: </label>
                         <input
                             type="text"
                             name="firstName"
@@ -92,7 +95,7 @@ export default function Home({ persons }) {
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>Lastname</label>
+                        <label>Lastname: </label>
                         <input
                             type="text"
                             name="lastName"
@@ -103,7 +106,7 @@ export default function Home({ persons }) {
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>Email</label>
+                        <label>Email: </label>
                         <input
                             type="email"
                             name="email"
@@ -113,7 +116,7 @@ export default function Home({ persons }) {
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>Phonenumber</label>
+                        <label>Phonenumber: </label>
                         <input
                             type="tel"
                             name="phoneNumber"
@@ -123,31 +126,31 @@ export default function Home({ persons }) {
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>Closest manager</label>
+                        <label>Closest manager: </label>
                         <select
                             type="text"
                             name="closestManager"
                             placeholder="Closest manager">
-                              <option >Välj chef</option>
-                              <option value="Elisabeth Paulsson">Elisabeth Paulsson</option>
-                              <option value="Peter Elgåker">Peter Elgåker</option>
+                            <option >Välj chef</option>
+                            <option value="Elisabeth Paulsson">Elisabeth Paulsson</option>
+                            <option value="Peter Elgåker">Peter Elgåker</option>
                         </select>
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>Office location</label>
+                        <label>Office location: </label>
                         <select
                             type="text"
                             name="officeLocation"
                             placeholder="Office location">
-                              <option >Välj kontor</option>
-                              <option value="Helsingborg">Helsingborg</option>
-                              <option value="Malmö">Malmö</option>
+                            <option >Välj kontor</option>
+                            <option value="Helsingborg">Helsingborg</option>
+                            <option value="Malmö">Malmö</option>
                         </select>
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>Date of birth</label>
+                        <label>Date of birth: </label>
                         <input
                             type="date"
                             name="dateOfBirth"
@@ -157,7 +160,7 @@ export default function Home({ persons }) {
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>First employment date</label>
+                        <label>First employment date: </label>
                         <input
                             type="date"
                             name="firstEmploymentDate"
@@ -167,7 +170,7 @@ export default function Home({ persons }) {
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>Last employment date</label>
+                        <label>Last employment date: </label>
                         <input
                             type="date"
                             name="lastEmploymentDate"
@@ -177,7 +180,7 @@ export default function Home({ persons }) {
                     </div>
 
                     <div className={styles.formItem}>
-                        <label>Asked to reassign</label>
+                        <label>Asked to reassign: </label>
                         <input
                             type="checkbox"
                             name="reAssign"
@@ -190,6 +193,14 @@ export default function Home({ persons }) {
                         <button type="submit">Add employee</button>
                     </div>
                 </Form>
+        </Modal>
+    </div>
+            <div className={styles.container}>
+                <ul className="">
+                    {persons.map((person, i) => (
+                        <PostCard person={person} key={i} />
+                    ))}
+                </ul>
             </div>
         </Layout>
     );
