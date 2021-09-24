@@ -1,5 +1,6 @@
 import { connectToDatabase } from 'utils/mongodb';
 // const ObjectId = require('mongodb').ObjectId;
+var mongodb = require('mongodb');
 
 export default async function handler(req, res) {
     // switch the methods
@@ -93,6 +94,7 @@ async function updatePost(req, res) {
     }
 }
 
+
 async function deletePost(req, res) {
     try {
         // Connecting to the database
@@ -100,9 +102,9 @@ async function deletePost(req, res) {
 
         // Deleting the post
         await db.collection('company_list').deleteOne({
-            _id: new ObjectId(req.body),
+            _id: new mongodb.ObjectId(req.body.toString()),
         });
-
+        
         // returning a message
         return res.json({
             message: 'Person deleted successfully',

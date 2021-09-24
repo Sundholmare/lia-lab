@@ -5,9 +5,9 @@ import styles from 'styles/Home.module.css';
 import Form from 'components/Form';
 import Layout from 'components/Layout';
 import Modal from 'components/Modal/index'
+import router from 'next/router';
 
 export default function Home({ persons }) {
-
     const [showModal, setShowModal] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -22,8 +22,6 @@ export default function Home({ persons }) {
         lastEmploymentDate: '',
         reAssign: false
     })
-
-    console.log(formData);
 
     const onSubmit = async (e) => {
 
@@ -72,6 +70,17 @@ export default function Home({ persons }) {
         return 'Error';
         }
         
+    }
+
+    const handleDelete = async (id) => {
+        // delete the id
+        
+        await fetch('/api/posts', {
+            method: 'DELETE',
+            body: id,
+        });
+        
+        return router.push(router.asPath);
     }
 
     const handleToggleModal = () => setShowModal(!showModal);
@@ -200,7 +209,7 @@ export default function Home({ persons }) {
             <div>
                 <ul>
                     {persons.map((person, i) => (
-                        <PostCard person={person} key={i} />
+                            <PostCard person={person} key={i} handleDelete={handleDelete}/>
                     ))}
                 </ul>
             </div>

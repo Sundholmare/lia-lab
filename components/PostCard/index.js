@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import styles from 'styles/Home.module.css';
 
-export default function PostCard({ person }) {
+export default function PostCard({ person, handleDelete }) {
 
     const [display, setDisplay] = useState(false);
 
@@ -28,6 +27,7 @@ export default function PostCard({ person }) {
                 <p><span className="font-bold">Första anställningsdag:</span> {person.firstEmploymentDate}</p>
                 {person.lastEmploymentDate === '' ? null : <p><span className="font-bold">Sista anställningsdag:</span> {person.lastEmploymentDate}</p>}
                 <p><span className="font-bold">Vill bli omplacerad:</span> {person.reAssign ? 'Ja' : 'Nej'}</p></div>}
+                <button onClick={() => handleDelete(person._id)}>Ta bort</button>
             </li>   
     );
 }
