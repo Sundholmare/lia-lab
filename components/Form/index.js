@@ -28,23 +28,21 @@ export default function Form({ children, onSubmit, setFormData, formData }) {
     };
 
     return (
-        <div>
-            <div className={styles.container}>
-                <form onSubmit={handleSubmit} onChange={handleOnChange} className={styles.form}>
-                    {error ? (
-                        <div className={styles.formItem}>
-                            <h3 className={styles.error}>{error}</h3>
+            <div className="h-full w-full">
+                <form onSubmit={handleSubmit} onChange={handleOnChange} className="flex flex-col h-full w-full">
+                    {/* {error ? (
+                        <div>
+                            <h3>{error}</h3>
                         </div>
                     ) : null}
                     {message ? (
-                        <div className={styles.formItem}>
-                            <h3 className={styles.message}>{message}</h3>
+                        <div >
+                            <h3 >{message}</h3>
                         </div>
-                    ) : null}
+                    ) : null} */}
 
                     {children}
                 </form>
             </div>
-        </div>
     );
 }

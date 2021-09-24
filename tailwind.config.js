@@ -6,7 +6,8 @@ module.exports = {
       colors: {
         consid: '#022d41',
         white: '#fff',
-        black: '#000'
+        black: '#000',
+        overlay: 'rgba(0, 0, 0, 0.5)',
       },
       fontSize: {
         tt: ['2rem', '1.25rem'],

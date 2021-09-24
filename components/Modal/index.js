@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
 
-const Modal = ({ show, onClose, children, title }) => {
+const Modal = ({ show, onClose, children }) => {
     const [isBrowser, setIsBrowser] = useState(false);
 
     useEffect(() => {
@@ -15,9 +15,12 @@ const Modal = ({ show, onClose, children, title }) => {
     };
     
     const modalContent = show ? (
-            <div className="w-1/4 h-2/4 bg-white top-20 left-80 absolute flex rounded-2xl border-2">
-                <a href="#" onClick={handleCloseClick}>x</a>
-                {children}
+            <div>
+                <div onClick={handleCloseClick} className="absolute top-0 left-0 bg-overlay z-20 h-full w-full" />
+                    <div className="w-2/5 h-3/5 bg-white top-2/4 left-2/4 absolute flex rounded-2xl border-2 z-30 transform
+                    -translate-y-2/4 -translate-x-2/4 overflow-auto">
+                        {children}
+                </div>
             </div>
     ) : null;
 

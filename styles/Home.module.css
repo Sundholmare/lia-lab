@@ -46,6 +46,12 @@
   transition: background 0.3s, color 0.3s;
 }
 
+.formBtn:hover{
+  background: #022d41;
+  color: #fff;
+  transition: background 0.3s, color 0.3s;
+}
+
 .listItem{
   display: flex;
   flex-direction: column;

@@ -27,7 +27,7 @@ export default function Home({ persons }) {
 
     const onSubmit = async (e) => {
 
-        //post formData to mongo
+        // post formData to mongo
         // post structure
         let post = {
         firstName: formData.firstName,
@@ -74,17 +74,19 @@ export default function Home({ persons }) {
         
     }
 
+    const handleToggleModal = () => setShowModal(!showModal);
+    
 
     return (
-        <Layout>
+        <Layout toggleModal={handleToggleModal}>
             <div>
-        <button onClick={() => setShowModal(true)}>Open Modal</button>
-        <Modal
-            onClose={() => setShowModal(false)}
-            show={showModal}>
-                <Form onSubmit={onSubmit} setFormData={setFormData} formData={formData}>
-                    <div className={styles.formItem}>
-                        <label>Firstname: </label>
+                <Modal
+                    onClose={handleToggleModal}
+                    show={showModal}>
+                    <Form onSubmit={onSubmit} setFormData={setFormData} formData={formData}>
+
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Firstname: </label>
                         <input
                             type="text"
                             name="firstName"
@@ -94,8 +96,8 @@ export default function Home({ persons }) {
                         />
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>Lastname: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Lastname: </label>
                         <input
                             type="text"
                             name="lastName"
@@ -105,8 +107,8 @@ export default function Home({ persons }) {
                         />
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>Email: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Email: </label>
                         <input
                             type="email"
                             name="email"
@@ -115,8 +117,8 @@ export default function Home({ persons }) {
                         />
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>Phonenumber: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Phonenumber: </label>
                         <input
                             type="tel"
                             name="phoneNumber"
@@ -125,8 +127,8 @@ export default function Home({ persons }) {
                         />
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>Closest manager: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Closest manager: </label>
                         <select
                             type="text"
                             name="closestManager"
@@ -137,8 +139,8 @@ export default function Home({ persons }) {
                         </select>
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>Office location: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Office location: </label>
                         <select
                             type="text"
                             name="officeLocation"
@@ -149,8 +151,8 @@ export default function Home({ persons }) {
                         </select>
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>Date of birth: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Date of birth: </label>
                         <input
                             type="date"
                             name="dateOfBirth"
@@ -159,8 +161,8 @@ export default function Home({ persons }) {
                         />
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>First employment date: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">First employment date: </label>
                         <input
                             type="date"
                             name="firstEmploymentDate"
@@ -169,8 +171,8 @@ export default function Home({ persons }) {
                         />
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>Last employment date: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Last employment date: </label>
                         <input
                             type="date"
                             name="lastEmploymentDate"
@@ -179,8 +181,8 @@ export default function Home({ persons }) {
                         />
                     </div>
 
-                    <div className={styles.formItem}>
-                        <label>Asked to reassign: </label>
+                    <div className="p-2 border-b-2">
+                        <label className="font-bold">Asked to reassign: </label>
                         <input
                             type="checkbox"
                             name="reAssign"
@@ -189,14 +191,14 @@ export default function Home({ persons }) {
                         />
                     </div>
 
-                    <div className={styles.formItem}>
-                        <button type="submit">Add employee</button>
+                    <div>
+                        <button className={`m-2 w-36 h-10 rounded-lg bg-none text-consid border-2 border-consid cursour-pointer font-bold text-btn ${styles.formBtn}`} type="submit">Add employee</button>
                     </div>
                 </Form>
         </Modal>
     </div>
-            <div className={styles.container}>
-                <ul className="">
+            <div>
+                <ul>
                     {persons.map((person, i) => (
                         <PostCard person={person} key={i} />
                     ))}
