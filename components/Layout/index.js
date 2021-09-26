@@ -16,7 +16,7 @@ const Layout = ({ children, toggleModal }) => {
                         <img className="h-24 mx-6" src={image} alt="consid logo" />
                         <h1 className="text-white text-tt my-8">Personalverktyg</h1>
                         <button onClick={toggleModal} 
-                            className={`mr-16 min-w-40 min-h-12 p-2 rounded-lg bg-none text-white border-2 border-white cursour-pointer font-bold text-btn ${styles.btn}`} >
+                            className={`mr-16 min-w-btn max-h-12 p-2 rounded-lg bg-none text-white border-2 border-white cursour-pointer font-bold text-btn ${styles.btn}`} >
                         Lägg till personal
                         </button>
                     </div>

@@ -16,6 +16,9 @@ module.exports = {
       waxWidth: {
         '4/5': '80%'
       },
+      minWidth: {
+        btn: '10rem'
+      },
       minHeight: {
         '12': '3rem'
       }

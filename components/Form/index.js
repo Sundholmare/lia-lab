@@ -9,6 +9,7 @@ export default function Form({ children, onSubmit, setFormData, formData }) {
     const handleOnChange = (e) => {
         e.preventDefault();
 
+        // sätter formdatans värde till varje unik inputs value.
         setFormData({
             ...formData, 
             [e.target.name]: e.target.value
@@ -22,6 +23,7 @@ export default function Form({ children, onSubmit, setFormData, formData }) {
         setError('');
         setMessage('');
 
+        // kollar om input har fått tillräcklig input för att gå vidare.
         if (e.target.checkValidity()) {
             onSubmit();
         }
@@ -40,8 +42,8 @@ export default function Form({ children, onSubmit, setFormData, formData }) {
                             <h3 >{message}</h3>
                         </div>
                     ) : null} */}
-
-                    {children}
+                    
+                    {children} {/* kopplar samman innehållet man ger <Form></Form> elementet */}
                 </form>
             </div>
     );

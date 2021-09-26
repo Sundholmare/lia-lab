@@ -10,6 +10,7 @@ import router from 'next/router';
 export default function Home({ persons }) {
     const [showModal, setShowModal] = useState(false);
 
+    // sätter formdatans grundvärde.
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -72,6 +73,7 @@ export default function Home({ persons }) {
         
     }
 
+    // delete funktion för att ta bort anställdas data.
     const handleDelete = async (id) => {
         // delete the id
         

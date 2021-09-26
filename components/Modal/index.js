@@ -9,6 +9,7 @@ const Modal = ({ show, onClose, children }) => {
     setIsBrowser(true);
     }, []);
 
+    // gör det tillgängligt att stänga ner modalen genom att klicka var som utanför modalen.
     const handleCloseClick = (e) => {
     e.preventDefault();
     onClose();
