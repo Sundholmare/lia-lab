@@ -1,4 +1,5 @@
-import { useState, usePersonContext } from 'react';
+import { useState } from 'react';
+import { usePersonContext } from 'context';
 
 import PostCard from 'components/PostCard';
 import styles from 'styles/Home.module.css';
@@ -9,10 +10,11 @@ import router from 'next/router';
 
 export default function Home({ persons }) {
     const [showModal, setShowModal] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
 
+    const [globalState, setGlobalState] = useState(usePersonContext());
 
-    // sätter formdatans grundvärde.
-    const [formData, setFormData] = useState({
+    const resetForm = () => setGlobalState({
         firstName: '',
         lastName: '',
         email: '',
@@ -23,85 +25,83 @@ export default function Home({ persons }) {
         firstEmploymentDate: '',
         lastEmploymentDate: '',
         reAssign: false
-    })
+    });
+
+    const handleToggleModal = () => {
+        if (showModal) {
+            setIsUpdating(false);
+            resetForm()
+        }
+        
+;        setShowModal(!showModal);
+    };
 
     const onSubmit = async (e) => {
 
-        // post formData to mongo
-        // post structure
-        let post = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phoneNumber: formData.phoneNumber,
-        closestManager: formData.closestManager,
-        officeLocation: formData.officeLocation,
-        firstEmploymentDate: formData.firstEmploymentDate,
-        lastEmploymentDate: formData.lastEmploymentDate,
-        reAssign: formData.reAssign
-        };
-
         // save the post
         let response = await fetch('/api/posts', {
-            method: 'POST',
-            body: JSON.stringify(post),
+            method: isUpdating ? 'PUT' : 'POST',
+            body: JSON.stringify(globalState),
         });
 
         // get the data
         let data = await response.json();
-
+        let message = '';
         if (data.success) {
             // reset the fields
-            setFormData({
-                firstName: '',
-                lastName: '',
-                email: '',
-                phoneNumber: '',
-                closestManager: '',
-                officeLocation: '',
-                dateOfBirth: '',
-                firstEmploymentDate: '',
-                lastEmploymentDate: '',
-                reAssign: false
-            })
+            resetForm();
 
-          // set the message
-        return 'Addition successful';
-            } else {
-          // set the error
-        return 'Error';
+            // set the message
+            message = 'Addition successful';
+        } else {
+            // set the error
+            message = 'Error';
         }
-        
+
+        setIsUpdating(false);
+        return message;
     }
 
     // delete funktion för att ta bort anställdas data.
     const handleDelete = async (id) => {
         // delete the id
-        
+
         await fetch('/api/posts', {
             method: 'DELETE',
             body: id,
         });
-        
+
         return router.push(router.asPath);
     }
 
     // update funktion för att ändra anställdas info.
     const handleUpdate = async (id) => {
 
-        let response = await fetch('/api/posts', {
-            method: 'PUT',
-            body: id
+        setIsUpdating(true);
+
+        let response = await fetch(`/api/posts?id=${id}`, {
+            method: 'GET',
         })
 
         let data = await response.json();
-        console.log(data);
-        
+
+        setGlobalState(data.person);
+
+        handleToggleModal();
+
         return router.push(router.asPath);
     }
 
-    const handleToggleModal = () => setShowModal(!showModal);
-    
+    const handleChange = (e) => {
+        console.log(globalState)
+        setGlobalState({
+            ...globalState,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    console.log(globalState);
+
 
     return (
         <Layout toggleModal={handleToggleModal}>
@@ -109,124 +109,134 @@ export default function Home({ persons }) {
                 <Modal
                     onClose={handleToggleModal}
                     show={showModal}>
-                    <Form onSubmit={onSubmit} setFormData={setFormData} formData={formData}>
+                    <Form onSubmit={onSubmit} setFormData={setGlobalState} formData={globalState}>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Firstname: </label>
-                        <input
-                            type="text"
-                            name="firstName"
-                            defaultValue={formData.firstName}
-                            placeholder="Firstname"
-                            required
-                        />
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Firstname: </label>
+                            <input
+                                type="text"
+                                name="firstName"
+                                onChange={handleChange}
+                                defaultValue={globalState.firstName}
+                                placeholder="Firstname"
+                                required
+                            />
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Lastname: </label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            defaultValue={formData.lastName}
-                            placeholder="Lastname"
-                            required
-                        />
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Lastname: </label>
+                            <input
+                                type="text"
+                                name="lastName"
+                                onChange={handleChange}
+                                defaultValue={globalState.lastName}
+                                placeholder="Lastname"
+                                required
+                            />
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Email: </label>
-                        <input
-                            type="email"
-                            name="email"
-                            defaultValue={formData.email}
-                            placeholder="Email"
-                        />
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Email: </label>
+                            <input
+                                type="email"
+                                name="email"
+                                onChange={handleChange}
+                                defaultValue={globalState.email}
+                                placeholder="Email"
+                            />
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Phonenumber: </label>
-                        <input
-                            type="tel"
-                            name="phoneNumber"
-                            defaultValue={formData.phoneNumber}
-                            placeholder="Phonenumber"
-                        />
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Phonenumber: </label>
+                            <input
+                                type="tel"
+                                name="phoneNumber"
+                                onChange={handleChange}
+                                defaultValue={globalState.phoneNumber}
+                                placeholder="Phonenumber"
+                            />
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Closest manager: </label>
-                        <select
-                            type="text"
-                            name="closestManager"
-                            placeholder="Closest manager">
-                            <option >Välj chef</option>
-                            <option value="Elisabeth Paulsson">Elisabeth Paulsson</option>
-                            <option value="Peter Elgåker">Peter Elgåker</option>
-                        </select>
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Closest manager: </label>
+                            <select
+                                type="text"
+                                name="closestManager"
+                                onChange={handleChange}
+                                placeholder="Closest manager">
+                                <option >Välj chef</option>
+                                <option value="Elisabeth Paulsson">Elisabeth Paulsson</option>
+                                <option value="Peter Elgåker">Peter Elgåker</option>
+                            </select>
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Office location: </label>
-                        <select
-                            type="text"
-                            name="officeLocation"
-                            placeholder="Office location">
-                            <option >Välj kontor</option>
-                            <option value="Helsingborg">Helsingborg</option>
-                            <option value="Malmö">Malmö</option>
-                        </select>
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Office location: </label>
+                            <select
+                                type="text"
+                                name="officeLocation"
+                                onChange={handleChange}
+                                placeholder="Office location">
+                                <option >Välj kontor</option>
+                                <option value="Helsingborg">Helsingborg</option>
+                                <option value="Malmö">Malmö</option>
+                            </select>
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Date of birth: </label>
-                        <input
-                            type="date"
-                            name="dateOfBirth"
-                            defaultValue={formData.dateOfBirth}
-                            placeholder="Date of birth"
-                        />
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Date of birth: </label>
+                            <input
+                                type="date"
+                                name="dateOfBirth"
+                                onChange={handleChange}
+                                defaultValue={globalState.dateOfBirth}
+                                placeholder="Date of birth"
+                            />
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">First employment date: </label>
-                        <input
-                            type="date"
-                            name="firstEmploymentDate"
-                            defaultValue={formData.firstEmploymentDate}
-                            placeholder="First employment date"
-                        />
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">First employment date: </label>
+                            <input
+                                type="date"
+                                name="firstEmploymentDate"
+                                onChange={handleChange}
+                                defaultValue={globalState.firstEmploymentDate}
+                                placeholder="First employment date"
+                            />
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Last employment date: </label>
-                        <input
-                            type="date"
-                            name="lastEmploymentDate"
-                            defaultValue={formData.lastEmploymentDate}
-                            placeholder="Last employment date"
-                        />
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Last employment date: </label>
+                            <input
+                                type="date"
+                                name="lastEmploymentDate"
+                                onChange={handleChange}
+                                defaultValue={globalState.lastEmploymentDate}
+                                placeholder="Last employment date"
+                            />
+                        </div>
 
-                    <div className="p-2 border-b-2">
-                        <label className="font-bold">Asked to reassign: </label>
-                        <input
-                            type="checkbox"
-                            name="reAssign"
-                            defaultValue={formData.reAssign}
-                            placeholder="Asked to reassign"
-                        />
-                    </div>
+                        <div className="p-2 border-b-2">
+                            <label className="font-bold">Asked to reassign: </label>
+                            <input
+                                type="checkbox"
+                                name="reAssign"
+                                onChange={handleChange}
+                                defaultValue={globalState.reAssign}
+                                placeholder="Asked to reassign"
+                            />
+                        </div>
 
-                    <div>
-                        <button className={`m-2 w-36 h-10 rounded-lg bg-none text-consid border-2 border-consid cursour-pointer font-bold text-btn ${styles.formBtn}`} type="submit">Add employee</button>
-                    </div>
-                </Form>
-        </Modal>
-    </div>
+                        <div>
+                            <button className={`m-2 w-36 h-10 rounded-lg bg-none text-consid border-2 border-consid cursour-pointer font-bold text-btn ${styles.formBtn}`} type="submit">{`${isUpdating ? 'Uppdatera' : 'Lägg till'} anställd`}</button>
+                        </div>
+                    </Form>
+                </Modal>
+            </div>
             <div>
                 <ul>
                     {persons.map((person, i) => (
-                            <PostCard person={person} key={i} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
+                        <PostCard person={person} key={i} handleUpdate={handleUpdate} handleDelete={handleDelete} />
                     ))}
                 </ul>
             </div>

@@ -1,13 +1,13 @@
 import '../styles/globals.css'
-import { useState } from 'react';
-import { PersonProvider } from 'context/index';
+import { PersonProvider } from 'context'
 
 function MyApp({ Component, pageProps }) {
 
   return (
     <PersonProvider>
       <Component {...pageProps} />
-    </PersonProvider>)
+    </PersonProvider>
+  )
 }
 
 export default MyApp
