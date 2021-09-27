@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from 'styles/Home.module.css';
 
-export default function PostCard({ person, handleDelete }) {
+export default function PostCard({ person, handleDelete, handleUpdate }) {
 
     const [display, setDisplay] = useState(false);
 
@@ -27,8 +27,9 @@ export default function PostCard({ person, handleDelete }) {
                         {person.lastEmploymentDate === '' ? null : <p><span className="font-bold">Sista anställningsdag:</span> {person.lastEmploymentDate}</p>}
                         <p><span className="font-bold">Vill bli omplacerad:</span> {person.reAssign ? 'Ja' : 'Nej'}</p>
                     </div>
-                    <div>
+                    <div className="flex flex-col justify-between h-28">
                         <button onClick={() => handleDelete(person._id)}>Ta bort</button>
+                        <button onClick={() => handleUpdate(person._id)}>Redigera</button>
                     </div>
                 </section>}
             </li>   

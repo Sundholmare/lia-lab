@@ -43,7 +43,7 @@ export default function Form({ children, onSubmit, setFormData, formData }) {
                         </div>
                     ) : null} */}
                     
-                    {children} {/* kopplar samman innehållet man ger <Form></Form> elementet */}
+                    {children} {/* kopplar samman innehållet man ger inuti <Form></Form> elementet */}
                 </form>
             </div>
     );

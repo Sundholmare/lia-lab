@@ -1,3 +1,4 @@
+import { data } from 'autoprefixer';
 import { connectToDatabase } from 'utils/mongodb';
 // const ObjectId = require('mongodb').ObjectId;
 var mongodb = require('mongodb');
@@ -74,9 +75,19 @@ async function updatePost(req, res) {
         // update the published status of the post
         await db.collection('company_list').updateOne(
             {
-                _id: new ObjectId(req.body),
+                _id: new mongodb.ObjectId(req.body.toString()),
             },
-            { $set: { published: true } }
+            { $set: { 
+                firstName: 'Filip',
+                // lastName: data.lastName,
+                // email: data.email,
+                // phoneNumber: data.phoneNumber,
+                // closestManager: data.closestManager,
+                // officeLocation: data.officeLocation,
+                // firstEmploymentDate: data.firstEmploymentDate,
+                // lastEmploymentDate: data.lastEmploymentDate,
+                // reAssign: data.reAssign
+                    } }
         );
 
         // return a message

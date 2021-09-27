@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, usePersonContext } from 'react';
 
 import PostCard from 'components/PostCard';
 import styles from 'styles/Home.module.css';
@@ -9,6 +9,7 @@ import router from 'next/router';
 
 export default function Home({ persons }) {
     const [showModal, setShowModal] = useState(false);
+
 
     // sätter formdatans grundvärde.
     const [formData, setFormData] = useState({
@@ -81,6 +82,20 @@ export default function Home({ persons }) {
             method: 'DELETE',
             body: id,
         });
+        
+        return router.push(router.asPath);
+    }
+
+    // update funktion för att ändra anställdas info.
+    const handleUpdate = async (id) => {
+
+        let response = await fetch('/api/posts', {
+            method: 'PUT',
+            body: id
+        })
+
+        let data = await response.json();
+        console.log(data);
         
         return router.push(router.asPath);
     }
@@ -211,7 +226,7 @@ export default function Home({ persons }) {
             <div>
                 <ul>
                     {persons.map((person, i) => (
-                            <PostCard person={person} key={i} handleDelete={handleDelete}/>
+                            <PostCard person={person} key={i} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
                     ))}
                 </ul>
             </div>
