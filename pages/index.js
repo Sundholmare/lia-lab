@@ -59,6 +59,7 @@ export default function Home({ persons }) {
         }
 
         setIsUpdating(false);
+        router.push(router.asPath);
         return message;
     }
 
@@ -112,7 +113,7 @@ export default function Home({ persons }) {
                     <Form onSubmit={onSubmit} setFormData={setGlobalState} formData={globalState}>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">Firstname: </label>
+                            <label className="font-bold">Förnamn: </label>
                             <input
                                 type="text"
                                 name="firstName"
@@ -124,7 +125,7 @@ export default function Home({ persons }) {
                         </div>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">Lastname: </label>
+                            <label className="font-bold">Efternamn: </label>
                             <input
                                 type="text"
                                 name="lastName"
@@ -147,7 +148,7 @@ export default function Home({ persons }) {
                         </div>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">Phonenumber: </label>
+                            <label className="font-bold">Telefonnummer: </label>
                             <input
                                 type="tel"
                                 name="phoneNumber"
@@ -158,33 +159,32 @@ export default function Home({ persons }) {
                         </div>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">Closest manager: </label>
+                            <label className="font-bold">Närmsta chef: </label>
                             <select
                                 type="text"
                                 name="closestManager"
-                                onChange={handleChange}
                                 placeholder="Closest manager">
                                 <option >Välj chef</option>
-                                <option value="Elisabeth Paulsson">Elisabeth Paulsson</option>
-                                <option value="Peter Elgåker">Peter Elgåker</option>
+                                <option onChange={handleChange} defaultValue="Elisabeth Paulsson">Elisabeth Paulsson</option>
+                                <option onChange={handleChange} defaultValue="Peter Elgåker">Peter Elgåker</option>
                             </select>
                         </div>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">Office location: </label>
+                            <label className="font-bold">Kontor: </label>
                             <select
                                 type="text"
                                 name="officeLocation"
                                 onChange={handleChange}
                                 placeholder="Office location">
                                 <option >Välj kontor</option>
-                                <option value="Helsingborg">Helsingborg</option>
-                                <option value="Malmö">Malmö</option>
+                                <option defaultValue="Helsingborg">Helsingborg</option>
+                                <option defaultValue="Malmö">Malmö</option>
                             </select>
                         </div>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">Date of birth: </label>
+                            <label className="font-bold">Födelsedatum: </label>
                             <input
                                 type="date"
                                 name="dateOfBirth"
@@ -195,7 +195,7 @@ export default function Home({ persons }) {
                         </div>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">First employment date: </label>
+                            <label className="font-bold">Första anställningsdag: </label>
                             <input
                                 type="date"
                                 name="firstEmploymentDate"
@@ -206,7 +206,7 @@ export default function Home({ persons }) {
                         </div>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">Last employment date: </label>
+                            <label className="font-bold">Sista anställningsdag: </label>
                             <input
                                 type="date"
                                 name="lastEmploymentDate"
@@ -217,7 +217,7 @@ export default function Home({ persons }) {
                         </div>
 
                         <div className="p-2 border-b-2">
-                            <label className="font-bold">Asked to reassign: </label>
+                            <label className="font-bold">Bett om omplacering: </label>
                             <input
                                 type="checkbox"
                                 name="reAssign"
@@ -228,7 +228,7 @@ export default function Home({ persons }) {
                         </div>
 
                         <div>
-                            <button className={`m-2 w-36 h-10 rounded-lg bg-none text-consid border-2 border-consid cursour-pointer font-bold text-btn ${styles.formBtn}`} type="submit">{`${isUpdating ? 'Uppdatera' : 'Lägg till'} anställd`}</button>
+                            <button className={`m-2 w-36 m-h-12 rounded-lg bg-none text-consid border-2 border-consid cursour-pointer font-bold text-btn ${styles.formBtn}`} type="submit">{`${isUpdating ? 'Uppdatera' : 'Lägg till'} anställd`}</button>
                         </div>
                     </Form>
                 </Modal>

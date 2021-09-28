@@ -14,7 +14,7 @@ const Layout = ({ children, toggleModal }) => {
                 <div className="py-4 flex items-center justify-between">
                     <div className="h-full w-1/3 ml-16 flex items-center justify-between">
                         <img className="h-24 mx-6" src={image} alt="consid logo" />
-                        <h1 className="text-white text-tt my-8">Personalverktyg</h1>
+                        <h1 className="text-white text-tt m-8">Personalverktyg</h1>
                         <button onClick={toggleModal} 
                             className={`mr-16 min-w-btn max-h-12 p-2 rounded-lg bg-none text-white border-2 border-white cursour-pointer font-bold text-btn ${styles.btn}`} >
                         Lägg till personal

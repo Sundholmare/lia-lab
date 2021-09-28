@@ -113,7 +113,7 @@ async function updatePost(req, res) {
         let { db } = await connectToDatabase();
 
         // update the published status of the post
-        await db.collection('company_list').updateOne(
+        await db.collection('company_list').findOneAndUpdate(
             {
                 _id: new mongodb.ObjectId(req.req.body.id.toString()),
             },
